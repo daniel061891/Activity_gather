@@ -1,0 +1,40 @@
+<%- include('includes/head.ejs')  %> 
+<body>
+    <%- include('includes/header.ejs')  %> 
+    <main>
+        <div class="container">
+            <div class="login_register_wrap p-4">
+                <h1 class="text-center mb-4">登入</h1>
+                <form action="/login" method="POST">
+                    <!-- <div class="mb-3">
+                        <label for="name" class="form-label">姓名</label>
+                        <input type="text" class="form-control" id="name" placeholder="Daniel" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">手機</label>
+                        <input type="text" class="form-control" id="phone" placeholder="0938558625" required>
+                    </div> -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">信箱</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">密碼</label>
+                        <input type="password" class="form-control" name="password" id="password" required>
+                        <a href="/forget-password">忘記密碼?</a>
+                    </div>
+                    <% if(showErr) { %> 
+                    <div class="alert alert-danger" role="alert">
+                        <%= errMsg %> 
+                    </div>
+                    <% } %> 
+                    <div class="btn_wrap">
+                        <button type="submit" class="login_btn all_btns">登入</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <%- include('includes/footer.ejs')  %> 
+</body>
+</html>

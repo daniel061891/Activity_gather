@@ -1,0 +1,27 @@
+{
+  "name": "activity_gather",
+  "version": "1.0.0",
+  "description": "揪團管理",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daniel061891/Activity_gather.git"
+  },
+  "author": "daniel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daniel061891/Activity_gather/issues"
+  },
+  "homepage": "https://github.com/daniel061891/Activity_gather#readme",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "mongodb": "^4.10.0",
+    "mongoose": "^6.6.5",
+    "nodemon": "^2.0.20"
+  }
+}

@@ -22,10 +22,18 @@ app.use(authRoutes);
 // app.use(erorrRoutes);
 
 app.get("*", (req, res) => {
-  res.render('404')
+  res.render("404");
   res.end();
 });
 
-app.listen(3000, () => {
-  console.log("server start!!");
-});
+mongoose
+  .connect(
+    "mongodb+srv://daniel:1996dan061891@cluster0.2hpkhk3.mongodb.net/?retryWrites=true&w=majority"
+  )
+  .then((result) => {
+    console.log("Connected!");
+    app.listen(3000);
+  })
+  .catch((err) => {
+    console.log(err);
+  });

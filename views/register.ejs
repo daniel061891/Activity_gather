@@ -4,8 +4,16 @@
     <main>
         <div class="container">
             <div class="login_register_wrap p-4">
-                <h1 class="text-center mb-4">會員登入</h1>
-                <form action="/login" method="POST">
+                <h1 class="text-center mb-4">會員註冊</h1>
+                <form action="/register" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">姓名</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Daniel" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">手機</label>
+                        <input type="text" class="form-control" name="phone" id="phone" placeholder="0938558625" required>
+                    </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">信箱</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
@@ -13,7 +21,10 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">密碼</label>
                         <input type="password" class="form-control" name="password" id="password" required>
-                        <a href="/forget-password">忘記密碼?</a>
+                    </div>
+                    <div class="mb-3">
+                        <label for="checkPassword" class="form-label">確認密碼</label>
+                        <input type="password" class="form-control" name="checkPassword" id="checkPassword" required>
                     </div>
                     <% if(showErr) { %> 
                     <div class="alert alert-danger" role="alert">
@@ -21,7 +32,7 @@
                     </div>
                     <% } %> 
                     <div class="btn_wrap">
-                        <button type="submit" class="login_btn all_btns">登入</button>
+                        <button type="submit" class="register_btn all_btns">註冊</button>
                     </div>
                 </form>
             </div>

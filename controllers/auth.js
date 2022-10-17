@@ -7,6 +7,10 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = (req, res, next) => {
   const { email, password } = req.body;
   if (email === "qwe@qwe" && password === "qwe") {
+    req.session.user = {
+      username: "daniel",
+    };
+    // res.setHeader("Set-Cookie", "isLogin=true");
     res.redirect("/");
     return;
   }
@@ -36,4 +40,9 @@ exports.postRegister = async (req, res, next) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+exports.getLogout = (req, res, next) => {
+  req.session.user = undefined;
+  res.render("login", { showErr: false });
 };

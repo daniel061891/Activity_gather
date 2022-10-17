@@ -8,8 +8,9 @@
                 </h1>
             </a>
             <div class="auth_btns">
-                <a href="/register" class="register_btn all_btns">註冊</a>
-                <a href="/login" class="login_btn all_btns ms-3">登入</a>
+                <!-- <a href="/register" class="register_btn all_btns"></a> -->
+                <a href="/login" class="login_btn all_btns ms-3">登入/註冊</a>
+                <a href="/logout" class="login_btn all_btns ms-3">登出</a>
             </div>
         </div>
     </div>
@@ -35,3 +36,11 @@
         </div>
     </div>
 </header>
+
+<script>
+    // const isLogin = document.cookie.split('=')[1]
+    // if (isLogin) {
+    //     const auth_btns = document.querySelector('.auth_btns')
+    //     auth_btns.setAttribute('style', 'visibility: hidden;')
+    // }
+</script>

@@ -4,35 +4,41 @@
     <main>
         <div class="container">
             <div class="login_register_wrap p-4">
-                <h1 class="text-center mb-4">會員註冊</h1>
-                <form action="/register" method="POST">
+                <h1 class="text-center mb-4">會員中心</h1>
+                <form action="/membercenter" method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">姓名</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Daniel" required>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Daniel" value="<%= name %>" required>
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">手機</label>
-                        <input type="text" class="form-control" name="phone" id="phone" placeholder="0938558625" required>
+                        <input type="text" class="form-control" name="phone" id="phone" placeholder="0938558625" value="<%= phone %>" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">信箱</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" value="<%= email %>" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">密碼</label>
-                        <input type="password" class="form-control" name="password" id="password" required>
+                        <input type="password" class="form-control" name="password" id="password">
                     </div>
                     <div class="mb-3">
                         <label for="checkPassword" class="form-label">確認密碼</label>
-                        <input type="password" class="form-control" name="checkPassword" id="checkPassword" required>
+                        <input type="password" class="form-control" name="checkPassword" id="checkPassword">
                     </div>
                     <% if(showErr) { %> 
                     <div class="alert alert-danger" role="alert">
                         <%= errMsg %> 
                     </div>
                     <% } %> 
+                    <% if(showAlert) { %> 
+                    <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                        <%= alertMsg %> 
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <% } %> 
                     <div class="btn_wrap">
-                        <button type="submit" class="btn btn-primary all_btns">註冊</button>
+                        <button type="submit" class="btn btn-primary all_btns">修改</button>
                     </div>
                 </form>
             </div>
@@ -41,3 +47,5 @@
     <%- include('includes/footer.ejs')  %> 
 </body>
 </html>
+<script>
+</script>

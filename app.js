@@ -60,7 +60,7 @@ app.get("*", (req, res) => {
 
 mongoose
   .connect(
-    "mongodb+srv://daniel:1996dan061891@cluster0.2hpkhk3.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://daniel:1998mongo0618@cluster0.2hpkhk3.mongodb.net/?retryWrites=true&w=majority"
   )
   .then((result) => {
     console.log("Connected!");

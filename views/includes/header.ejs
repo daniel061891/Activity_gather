@@ -9,30 +9,36 @@
             </a>
             <div class="auth_btns">
                 <!-- <a href="/register" class="register_btn all_btns"></a> -->
+                <% if (!isLogin) { %>  
                 <a href="/login" class="login_btn btn btn-danger ms-3">登入/註冊</a>
+                <% } %> 
                 <!-- <button type="button" class="btn btn-primary">Primary</button> -->
+                <% if (isLogin) { %>  
                 <a href="/membercenter" class="btn btn-primary ms-3"><i class="fa-solid fa-user me-2"></i>會員中心</a>
                 <a href="/logout" class="login_btn btn btn-success ms-3"><i class="fa-solid fa-right-from-bracket me-2"></i>登出</a>
+                <% } %> 
             </div>
         </div>
     </div>
     <div class="mid_bar">
         <div class="container">
             <div class="nav_bar">
-                <a href="/add-game" class="">所有活動</a>
+                <a href="/" class="">所有活動</a>
                 <a href="/add-game" class="">建立活動</a>
                 <a href="/add-game" class="">我的活動</a>
                 <a href="/add-game" class="">活動分類</a>
             </div>
             <div class="search_bar">
                 <i class="fa-solid fa-magnifying-glass me-2"></i>
-                <form action="">
+                <form action="/search" method="POST">
                     <input
                     type="text"
-                    class="form-control"
+                    class="form-control me-2"
+                    name="keyword"
                     id="search_input"
                     aria-describedby="emailHelp"
                     />
+                    <button type="submit" class="btn btn-secondary">搜尋</button>
                 </form>
             </div>
         </div>

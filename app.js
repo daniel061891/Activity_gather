@@ -46,7 +46,7 @@ const authCheck = (req, res, next) => {
 };
 
 app.get("/", authCheck, (req, res) => {
-  res.render("index");
+  res.render("index", { isLogin: req.session.user ? true : false });
 });
 
 app.use(authRoutes);
@@ -54,7 +54,7 @@ app.use(authRoutes);
 // app.use(erorrRoutes);
 
 app.get("*", (req, res) => {
-  res.render("404");
+  res.render("404", { isLogin: req.session.user ? true : false });
   res.end();
 });
 

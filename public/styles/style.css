@@ -4,8 +4,56 @@
   font-family: "Noto Sans TC", sans-serif;
 }
 
+.limit_two {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.limit_three {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.limit_four {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 4 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.limit_five {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 5 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
 a {
   text-decoration: none !important;
+}
+
+.card {
+  -webkit-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+.card:hover {
+  -webkit-transform: scale(1.01);
+          transform: scale(1.01);
+  -webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+          box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+main .container {
+  padding: 3rem 0;
 }
 
 .all_btns {
@@ -134,10 +182,25 @@ header .mid_bar .container .search_bar {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 40%;
 }
 
 header .mid_bar .container .search_bar i {
   font-size: 1.5rem;
+}
+
+header .mid_bar .container .search_bar form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+}
+
+header .mid_bar .container .search_bar form button {
+  width: 100px;
 }
 
 html, body {

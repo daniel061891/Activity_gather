@@ -1,36 +1,37 @@
-<%- include('includes/head.ejs')  %> 
-<body>
-    <%- include('includes/header.ejs')  %> 
-    <main>
-        <div class="container">
-            <div class="login_register_wrap p-4">
-                <h1 class="text-center mb-4">會員登入</h1>
-                <form action="/login" method="POST">
-                    <div class="mb-3">
-                        <label for="email" class="form-label">信箱</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
+<%- include('includes/head.ejs') %>
+    <body>
+        <%- include('includes/header.ejs') %>
+            <main>
+                <div class="container">
+                    <div class="login_register_wrap p-4">
+                        <h1 class="text-center mb-4">會員登入</h1>
+                        <form action="/login" method="POST">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">信箱</label>
+                                <input type="email" class="form-control" name="email" id="email"
+                                    placeholder="name@example.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">密碼</label>
+                                <input type="password" class="form-control" name="password" id="password" required>
+                                <a href="/forget-password">忘記密碼?</a>
+                            </div>
+                            <% if(showErr) { %>
+                                <div class="alert alert-danger" role="alert">
+                                    <%= errMsg %>
+                                </div>
+                            <% } %>
+                            <div class="btn_wrap">
+                                <button type="submit" class="btn btn-danger all_btns">登入</button>
+                            </div>
+                            <div class="goRegister mt-2">
+                                <span>還沒有帳號嗎?</span>
+                                <a href="/register">前往註冊</a>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">密碼</label>
-                        <input type="password" class="form-control" name="password" id="password" required>
-                        <a href="/forget-password">忘記密碼?</a>
-                    </div>
-                    <% if(showErr) { %> 
-                    <div class="alert alert-danger" role="alert">
-                        <%= errMsg %> 
-                    </div>
-                    <% } %> 
-                    <div class="btn_wrap">
-                        <button type="submit" class="btn btn-danger all_btns">登入</button>
-                    </div>
-                    <div class="goRegister mt-2">
-                        <span>還沒有帳號嗎?</span>
-                        <a href="/register">前往註冊</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </main>
-    <%- include('includes/footer.ejs')  %> 
-</body>
+                </div>
+            </main>
+        <%- include('includes/footer.ejs') %>
+    </body>
 </html>

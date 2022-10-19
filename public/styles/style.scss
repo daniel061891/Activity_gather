@@ -5,8 +5,48 @@
 }
 $main: #f32918;
 //通用
+.limit_two {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;  
+}
+.limit_three {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;  
+}
+.limit_four {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 4 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;  
+}
+.limit_five {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 5 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;  
+}
 a {
   text-decoration: none !important;
+}
+.card {
+  transition: all .2s linear;
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+}
+main {
+  .container {
+    padding: 3rem 0;
+  }
 }
 .all_btns {
   color: white;
@@ -95,8 +135,17 @@ header {
       .search_bar {
         display: flex;
         align-items: center;
+        width: 40%;
         i {
           font-size: 1.5rem;
+        }
+        form {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          button {
+            width: 100px;
+          }
         }
       }
     }

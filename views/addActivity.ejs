@@ -1,0 +1,51 @@
+<%- include('includes/head.ejs')  %> 
+<body>
+    <%- include('includes/header.ejs')  %> 
+    <main>
+        <div class="container">
+            <div class="login_register_wrap p-4">
+                <h1 class="text-center mb-4">建立活動</h1>
+                <form action="/add-activity" method="POST">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">活動名稱</label>
+                        <input type="text" class="form-control" name="name" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="type" class="form-label">活動類型</label>
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected value="volley">排球</option>
+                            <option value="fishing">釣魚</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="place" class="form-label">比賽場地</label>
+                        <input type="text" class="form-control" name="place" id="place" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address" class="form-label">地址</label>
+                        <input type="text" class="form-control" name="address" id="email" placeholder="台北市中正區公園路20號" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">日期</label>
+                        <input type="date" class="form-control" name="date" id="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="activityImg" class="form-label">活動照片</label>
+                        <!-- <input type="file" class="form-control" id="activityImg" name="activityImg" accept="image/png, image/jpeg"> -->
+                        <input type="text" class="form-control" id="activityImg" name="activityImg">
+                    </div>
+                    <% if(showErr) { %> 
+                    <div class="alert alert-danger" role="alert">
+                        <%= errMsg %> 
+                    </div>
+                    <% } %> 
+                    <div class="btn_wrap">
+                        <button type="submit" class="btn btn-primary all_btns">建立</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    <%- include('includes/footer.ejs')  %> 
+</body>
+</html>

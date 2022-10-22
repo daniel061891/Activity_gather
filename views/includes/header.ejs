@@ -24,9 +24,11 @@
         <div class="container">
             <div class="nav_bar">
                 <a href="/" class="">所有活動</a>
-                <a href="/add-game" class="">建立活動</a>
-                <a href="/add-game" class="">我的活動</a>
-                <a href="/add-game" class="">活動分類</a>
+                <% if (isLogin) { %>  
+                    <a href="/add-activity" class="">建立活動</a>
+                    <a href="/my-activity" class="">我的活動</a>
+                <% } %> 
+                <a href="/activity-classify" class="">活動分類</a>
             </div>
             <div class="search_bar">
                 <i class="fa-solid fa-magnifying-glass me-2"></i>

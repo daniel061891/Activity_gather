@@ -14,7 +14,8 @@ exports.postLogin = async (req, res, next) => {
       email: data[0].email,
     };
     console.log("登入成功");
-    res.render("index", { isLogin: true });
+    res.redirect("/");
+    // res.render("index", { isLogin: true });
     return;
   }
   res.render("login", {
@@ -39,6 +40,16 @@ exports.postRegister = async (req, res, next) => {
     });
     return;
   }
+  const sameUserMail = await UserModel.findOne({ email: email });
+  const sameUserPhone = await UserModel.findOne({ phone: phone });
+  if (sameUserMail !== null || sameUserPhone !== null) {
+    res.render("register", {
+      showErr: true,
+      errMsg: "此信箱或手機已被註冊",
+      isLogin: false,
+    });
+    return;
+  }
   try {
     const data = await UserModel.create({
       email,
@@ -46,7 +57,7 @@ exports.postRegister = async (req, res, next) => {
       name,
       phone,
     });
-    if (data) res.render("login", { showErr: false, isLogin: false });
+    if (data) res.redirect("/login");
   } catch (err) {
     console.log(err);
   }
@@ -55,14 +66,14 @@ exports.postRegister = async (req, res, next) => {
 // logout
 exports.getLogout = (req, res, next) => {
   req.session.user = undefined;
-  res.render("login", { showErr: false, isLogin: false });
+  res.redirect("/");
 };
 
 // member center
 exports.getMemberCenter = async (req, res, next) => {
   console.log("user", req.session.user);
   if (req.session.user === undefined) {
-    res.render("404", { isLogin: true });
+    res.render("404", { isLogin: req.session.user ? true : false });
     return;
   }
   const id = req.session.user.id;
@@ -88,7 +99,7 @@ exports.postMemberCenter = async (req, res, next) => {
   console.log(req.body);
   console.log(req.session.user);
   if (req.session.user === undefined) {
-    res.render("404", { isLogin: true });
+    res.render("404", { isLogin: req.session.user ? true : false });
     return;
   }
   // const userEmail = req.session.user.email;

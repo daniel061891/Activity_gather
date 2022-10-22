@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 
 const authRoutes = require("./router/auth");
+const activityRoutes = require("./router/activity");
 // const erorrRoutes = require("./router/404");
 // 設定ejs
 app.set("view engine", "ejs");
@@ -50,6 +51,7 @@ app.get("/", authCheck, (req, res) => {
 });
 
 app.use(authRoutes);
+app.use(authCheck, activityRoutes);
 
 // app.use(erorrRoutes);
 

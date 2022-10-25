@@ -5,21 +5,34 @@
         <div class="container">
           <h1>我的活動</h1>
           <div class="row">
-            <% for (let i=1;i<5;i++) { %>
+            <% if(activityData.length === 0){ %> 
+              <h1 class="text-center">目前無活動</h1>
+            <% } %> 
+            <% activityData.forEach(item => { %>
               <div class="col-lg-3 col-4 my-3">
-                <div class="card" style="width:100%;height:380px;cursor:pointer;" onclick="location.href = '/login'">
-                  <img src="/img/voll.jpg" class="card-img-top" alt="...">
+                <div class="card" style="width:100%;height:430px;cursor:pointer;" onclick="location.href = '/activity-detail/<%= item._id%>'">
+                  <button type="button" class="edit_btn btn btn-primary" onclick="location.href = '/edit-activity/<%= item._id%>'">編輯</button>
+                  <img src="<%= item.imgUrl %>" class="card-img-top" alt="...">
                   <div class="card-body">
-                    <h5 class="card-title">2022 興誠杯排球比賽</h5>
-                    <p class="card-text limit_four">在後疫情時代，停頓許久的運動交流，終於迎來了對排球堅守的「信仰」，讓已經迫不及待地想要大展身手的你，傾聽心裡的聲音，追逐自己所嚮往的夢想舞台！</p>
+                    <h5 class="card-title"><%= item.name %></h5>
+                    <p class="card-text limit_four"><%= item.desc %></p>
                     <!-- <a href="/login" class="btn btn-primary">Go somewhere</a> -->
                   </div>
                 </div>
               </div>
-              <% } %>
+              <% }) %>
           </div>
         </div>
       </main>
       <%- include('includes/footer.ejs') %>
   </body>
 </html>
+<script>
+  const edit_btns = document.querySelectorAll('.edit_btn')
+  edit_btns.forEach(item => {
+    item.addEventListener('click', (e) => {
+      console.log(111);
+      e.stopPropagation()
+    })
+  })
+</script>

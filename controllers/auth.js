@@ -1,28 +1,47 @@
 const mongoose = require("mongoose");
 const UserModel = require("../models/auth");
+const bcrypt = require('bcryptjs')
 // Login
 exports.getLogin = (req, res, next) => {
   res.render("login", { showErr: false, isLogin: false });
 };
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
-  const data = await UserModel.find({ email: email });
-  console.log("login ok:", data);
-  if (data.length !== 0 && password === data[0].password) {
-    req.session.user = {
-      id: data[0]._id,
-      email: data[0].email,
-    };
-    console.log("登入成功");
-    res.redirect("/");
-    // res.render("index", { isLogin: true });
-    return;
+  try {
+    const data = await UserModel.find({ email: email });
+    const comparePassword = await bcrypt.compare(password, data[0].password)
+    console.log(comparePassword);
+    if (data.length !== 0 && comparePassword ) {
+      req.session.user = {
+        id: data[0]._id,
+        email: data[0].email,
+      };
+      console.log("登入成功");
+      res.redirect("/");
+      return;
+    }
+    res.render("login", {
+      errMsg: "信箱或密碼錯誤",
+      showErr: true,
+      isLogin: false,
+    });
+  } catch (err) {
+    console.log(err);
   }
-  res.render("login", {
-    errMsg: "信箱或密碼錯誤",
-    showErr: true,
-    isLogin: false,
-  });
+  // if (data.length !== 0 && password === hashPassword) {
+  //   req.session.user = {
+  //     id: data[0]._id,
+  //     email: data[0].email,
+  //   };
+  //   console.log("登入成功");
+  //   res.redirect("/");
+  //   return;
+  // }
+  // res.render("login", {
+  //   errMsg: "信箱或密碼錯誤",
+  //   showErr: true,
+  //   isLogin: false,
+  // });
 };
 
 //register
@@ -51,9 +70,10 @@ exports.postRegister = async (req, res, next) => {
     return;
   }
   try {
+    const hashPassword = await bcrypt.hash(password, 12)
     const data = await UserModel.create({
       email,
-      password,
+      password: hashPassword,
       name,
       phone,
     });
@@ -71,7 +91,6 @@ exports.getLogout = (req, res, next) => {
 
 // member center
 exports.getMemberCenter = async (req, res, next) => {
-  console.log("user", req.session.user);
   if (req.session.user === undefined) {
     res.render("404", { isLogin: req.session.user ? true : false });
     return;
@@ -79,7 +98,6 @@ exports.getMemberCenter = async (req, res, next) => {
   const id = req.session.user.id;
   try {
     const userData = await UserModel.find({ _id: id });
-    console.log(userData[0]);
     const { name, phone, email } = userData[0];
     res.render("member", {
       showAlert: false,
@@ -96,8 +114,6 @@ exports.getMemberCenter = async (req, res, next) => {
 
 // postMemberCenter
 exports.postMemberCenter = async (req, res, next) => {
-  console.log(req.body);
-  console.log(req.session.user);
   if (req.session.user === undefined) {
     res.render("404", { isLogin: req.session.user ? true : false });
     return;
@@ -118,7 +134,6 @@ exports.postMemberCenter = async (req, res, next) => {
   }
   try {
     const id = req.session.user.id;
-    console.log(id);
     let userData;
     if (password === "" && checkPassword === "") {
       userData = await UserModel.updateOne(
@@ -140,8 +155,6 @@ exports.postMemberCenter = async (req, res, next) => {
         }
       );
     }
-    console.log("userData", userData);
-    // alert("修改成功");
     res.render("member", {
       showErr: false,
       showAlert: true,

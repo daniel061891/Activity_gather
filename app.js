@@ -4,7 +4,11 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 
 const authRoutes = require("./router/auth");
-const activityRoutes = require("./router/activity");
+const activityRoutes = require("./router/activity")
+
+const activityModel = require("./models/activity");
+
+const isAuth = require('./middleware/is-auth')
 // const erorrRoutes = require("./router/404");
 // 設定ejs
 app.set("view engine", "ejs");
@@ -30,28 +34,17 @@ app.use(
   })
 );
 
-// app.use((req, res, next) => {
-//   if (req.session.user) {
-//     next();
-//   } else {
-//     res.redirect("/login");
-//   }
-// });
-const authCheck = (req, res, next) => {
-  if (req.session.user) {
-    req.session.date = Date.now();
-    next();
-  } else {
-    res.redirect("/login");
+app.get("/", async(req, res) => {
+  try {
+    const activityData = await activityModel.find({})
+    res.render("index", { isLogin: req.session.user ? true : false, activityData});
+  } catch (err) {
+    console.log(err);
   }
-};
-
-app.get("/", authCheck, (req, res) => {
-  res.render("index", { isLogin: req.session.user ? true : false });
 });
 
 app.use(authRoutes);
-app.use(authCheck, activityRoutes);
+app.use(activityRoutes);
 
 // app.use(erorrRoutes);
 

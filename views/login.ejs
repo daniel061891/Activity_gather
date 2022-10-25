@@ -8,12 +8,11 @@
                         <form action="/login" method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">信箱</label>
-                                <input type="email" class="form-control" name="email" id="email"
-                                    placeholder="name@example.com" required>
+                                <input type="email" class="form-control" name="email" id="email" value="daniel061891@gmail.com" placeholder="name@example.com" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">密碼</label>
-                                <input type="password" class="form-control" name="password" id="password" required>
+                                <input type="password" class="form-control" name="password" id="password" value="1" required>
                                 <a href="/forget-password">忘記密碼?</a>
                             </div>
                             <% if(showErr) { %>

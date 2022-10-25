@@ -24,7 +24,7 @@ const activitySchema = new Schema({
   },
   numberOfPeople: {
     type: Number,
-    required: true,
+    // required: true,
   },
   imgUrl: {
     type: String,
@@ -34,6 +34,10 @@ const activitySchema = new Schema({
     type: String,
     required: true,
   },
+  ownerId: {
+    type: String,
+    require: true,
+  }
 });
 
 const activityModel = mongoose.model("activitys", activitySchema);

@@ -4,39 +4,39 @@
     <main>
         <div class="container">
             <div class="login_register_wrap p-4">
-                <h1 class="text-center mb-4">建立活動</h1>
-                <form action="/add-activity" method="POST">
+                <h1 class="text-center mb-4">編輯活動</h1>
+                <form action="/edit-activity/<%= activityData._id%>" method="POST">
                     <div class="mb-3">
                         <label for="name" class="form-label">活動名稱</label>
-                        <input type="text" class="form-control" name="name" id="name" required>
+                        <input type="text" class="form-control" name="name" id="name" value="<%= activityData.name %>" required>
                     </div>
                     <div class="mb-3">
                         <label for="type" class="form-label">活動類型</label>
-                        <select name="type" class="form-select" aria-label="Default select example">
-                            <option selected value="volley">排球</option>
-                            <option value="fishing">釣魚</option>
+                        <select name="type" class="form-select" aria-label="Default select example" value="<%= activityData.type %>">
+                            <option value="volley" <%=activityData.type==='volley' ? 'selected' : '' %>>排球</option>
+                            <option value="fishing" <%=activityData.type==='fishing' ? 'selected' : '' %>>釣魚</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="place" class="form-label">比賽場地</label>
-                        <input type="text" class="form-control" name="place" id="place" required>
+                        <input type="text" class="form-control" name="place" id="place" value="<%= activityData.place %>" required>
                     </div>
                     <div class="mb-3">
                         <label for="address" class="form-label">地址</label>
-                        <input type="text" class="form-control" name="address" id="email" placeholder="台北市中正區公園路20號" required>
+                        <input type="text" class="form-control" name="address" id="email" value="<%= activityData.address %>" placeholder="台北市中正區公園路20號" required>
                     </div>
                     <div class="mb-3">
                         <label for="date" class="form-label">日期</label>
-                        <input type="date" class="form-control" name="date" id="date" required>
+                        <input type="date" class="form-control" name="date" id="date" value="<%= activityData.date %>" required>
                     </div>
                     <div class="mb-3">
                         <label for="imgUrl" class="form-label">活動照片</label>
                         <!-- <input type="file" class="form-control" id="activityImg" name="activityImg" accept="image/png, image/jpeg"> -->
-                        <input type="text" class="form-control" id="imgUrl" name="imgUrl">
+                        <input type="text" class="form-control" id="imgUrl" name="imgUrl" value="<%= activityData.imgUrl %>">
                     </div>
                     <div class="mb-3">
                         <label for="desc" class="form-label">活動描述</label>
-                        <textarea class="form-control" name="desc" id="desc" cols="30" rows="10"></textarea>
+                        <textarea class="form-control" name="desc" id="desc" cols="30" rows="10"><%= activityData.desc %></textarea>
                     </div>
                     <% if(showErr) { %> 
                     <div class="alert alert-danger" role="alert">
@@ -44,7 +44,8 @@
                     </div>
                     <% } %> 
                     <div class="btn_wrap">
-                        <button type="submit" class="btn btn-primary all_btns">建立</button>
+                        <button type="submit" class="btn btn-primary all_btns me-3">完成</button>
+                        <a href="/delete-activity/<%= activityData._id %>" class="btn btn-danger all_btns">刪除</a>
                     </div>
                 </form>
             </div>

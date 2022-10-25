@@ -43,6 +43,13 @@ a {
 .card {
   -webkit-transition: all .2s linear;
   transition: all .2s linear;
+  position: relative;
+}
+
+.card .edit_btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .card:hover {
@@ -128,6 +135,13 @@ header .top_bar .container .logo:hover {
           transform: scale(1.05);
 }
 
+header .top_bar .container .user_info {
+  color: white;
+  position: absolute;
+  left: 0;
+  margin: 0;
+}
+
 header .top_bar .container .auth_btns {
   position: absolute;
   right: 0;
@@ -203,7 +217,8 @@ header .mid_bar .container .search_bar form button {
   width: 100px;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -264,5 +279,23 @@ footer .footer_desc {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.detail_wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 70%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.detail_wrap h5 {
+  margin-bottom: 1rem;
 }
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,33 @@
+<%- include('includes/head.ejs') %>
+    <body>
+        <%- include('includes/header.ejs') %>
+            <main>
+                <div class="container">
+                    <div class="login_register_wrap p-4">
+                        <h1 class="text-center mb-4">重設密碼</h1>
+                        <form action="/reset" method="POST">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">新密碼</label>
+                                <input type="password" class="form-control" name="password" id="password" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="checkPassword" class="form-label">新密碼確認</label>
+                                <input type="password" class="form-control" name="checkPassword" id="checkPassword" required>
+                            </div>
+                            <input type="hidden" name="userId" value="<%=userId %>">
+                            <input type="hidden" name="resetToken" value="<%= resetToken %>">
+                            <% if(showErr) { %>
+                                <div class="alert alert-danger" role="alert">
+                                    <%= errMsg %>
+                                </div>
+                            <% } %>
+                            <div class="btn_wrap">
+                                <button type="submit" class="btn btn-danger all_btns">重設密碼</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        <%- include('includes/footer.ejs') %>
+    </body>
+</html>

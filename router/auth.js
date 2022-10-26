@@ -15,4 +15,10 @@ router.get("/membercenter", authController.getMemberCenter);
 
 router.post("/membercenter", authController.postMemberCenter);
 
+router.get("/forget-password", authController.getForgetPassword);
+router.post("/forget-password", authController.postForgetPassword);
+
+router.get("/reset/:token", authController.getReset);
+router.post("/reset", authController.postReset);
+
 module.exports = router;

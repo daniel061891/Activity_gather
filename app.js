@@ -8,8 +8,6 @@ const activityRoutes = require("./router/activity")
 
 const activityModel = require("./models/activity");
 
-const isAuth = require('./middleware/is-auth')
-// const erorrRoutes = require("./router/404");
 // 設定ejs
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -45,8 +43,6 @@ app.get("/", async(req, res) => {
 
 app.use(authRoutes);
 app.use(activityRoutes);
-
-// app.use(erorrRoutes);
 
 app.get("*", (req, res) => {
   res.render("404", { isLogin: req.session.user ? true : false });

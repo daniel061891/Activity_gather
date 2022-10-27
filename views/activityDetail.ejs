@@ -6,12 +6,13 @@
             <div class="detail_wrap w-60">
                 <h2 class="mb-4"><%= activityData.name %></h2>
                 <div class="img d-flex justify-content-start">
-                    <img class="mb-3 w-50" src="<%= activityData.imgUrl %> " alt="">
+                    <img class="mb-3 w-50" src="/<%= activityData.imgUrl %> " alt="">
                 </div>
                 <h5>比賽場地: <%= activityData.place %> </h5>
                 <h5>比賽地址: <%= activityData.address %> </h5>
                 <h5>比賽日期: <%= activityData.date %> </h5>
-                <h5>活動描述: <%= activityData.desc %> </h5>
+                <h5>活動描述:</h5>
+                <%= activityData.desc %>
             </div>
         </div>
     </main>

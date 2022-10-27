@@ -217,7 +217,6 @@ exports.getReset = async(req, res) => {
   try {
     const { token } = req.params
     const user = await UserModel.findOne({resetToken: token, resetTokenExpiration: {$gt: Date.now()}})
-    console.log(user);
     if (user) {
       const userId = user._id.toString()
       res.render("reset", { isLogin: req.session.user ? true : false, showErr: false, userId, resetToken: user.resetToken });
@@ -236,12 +235,15 @@ exports.postReset = async(req, res) => {
     }
     console.log(userId, resetToken);
     const user = await UserModel.findOne({ _id: userId, resetToken: resetToken, resetTokenExpiration: {$gt: Date.now()}})
-    console.log(user);
     const hashPassword = await bcrypt.hash(password, 12)
     user.password = hashPassword
+    user.resetToken = undefined
+    user.resetTokenExpiration = undefined
     await user.save()
     res.redirect("/login")
   } catch (err) {
     console.log(err);
   }
 }
+
+

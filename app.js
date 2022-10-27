@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+
 const session = require("express-session");
+const multer = require('multer')
 
 const authRoutes = require("./router/auth");
 const activityRoutes = require("./router/activity")
@@ -13,8 +15,19 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 // 管理靜態文件
 app.use(express.static("public"));
+app.use('/images', express.static("images"));
 // 接收post參數
 app.use(express.urlencoded({ extended: false }));
+// 控制接到的檔案要存在哪裡、檔名如何命名
+const fileStorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'images')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+app.use(multer({ storage: fileStorage }).single('img'))
 // 接收JSON參數
 app.use(express.json());
 

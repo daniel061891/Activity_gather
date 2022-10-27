@@ -7,10 +7,12 @@ exports.getaddActivity = (req, res, next) => {
   });
 };
 exports.postaddActivity = async(req, res, next) => {
-  const { name, type, place, imgUrl, desc, address, date } = req.body
+  const { name, type, place, desc, address, date } = req.body
+  const img = req.file
+  const imgUrl = img.path
   const ownerId = req.session.user.id
   try {
-    const data = await activityModel.create({
+    await activityModel.create({
       name, type, place, imgUrl, desc, address, date, ownerId
     });
     res.redirect("/my-activity");
@@ -36,6 +38,7 @@ exports.getActivityClassify = (req, res, next) => {
 exports.getActivityDetail = async(req, res, next) => {
   const activityId = req.params.id
   const activityData = await activityModel.findOne({ _id: activityId})
+  console.log(activityData);
   res.render("activityDetail", { isLogin: req.session.user ? true : false, activityData});
 };
 
@@ -47,9 +50,13 @@ exports.getEditActivity = async(req, res, next) => {
 
 exports.postEditActivity = async(req, res, next) => {
   const activityId = req.params.id
-  const { name, type, place, imgUrl, desc, address, date } = req.body
+  const { name, type, place, desc, address, date } = req.body
+  const img = req.file
+  const imgUrl = img.path
   try {
-    const activityData = await activityModel.updateOne({ _id: activityId}, { name, type, place, imgUrl, desc, address, date })
+    const activity = await activityModel.findOne({ _id: activityId})
+    if (activity.ownerId !== req.session.user.id) return res.redirect('/')
+    await activityModel.updateOne({ _id: activityId}, { name, type, place, imgUrl, desc, address, date })
     res.redirect('/my-activity')
   } catch (err) {
     console.log(err);
@@ -58,7 +65,9 @@ exports.postEditActivity = async(req, res, next) => {
 exports.getDeleteActivity = async(req, res, next) => {
   const activityId = req.params.id;
   try {
-    const activityData = await activityModel.deleteOne({ _id: activityId})
+    const activity = await activityModel.findOne({ _id: activityId})
+    if (activity.ownerId !== req.session.user.id) return res.redirect('/')
+    await activityModel.deleteOne({ _id: activityId})
     res.redirect('/my-activity')
   } catch (err) {
     console.log(err);

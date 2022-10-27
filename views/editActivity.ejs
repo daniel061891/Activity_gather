@@ -5,7 +5,7 @@
         <div class="container">
             <div class="login_register_wrap p-4">
                 <h1 class="text-center mb-4">編輯活動</h1>
-                <form action="/edit-activity/<%= activityData._id%>" method="POST">
+                <form action="/edit-activity/<%= activityData._id%>" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="name" class="form-label">活動名稱</label>
                         <input type="text" class="form-control" name="name" id="name" value="<%= activityData.name %>" required>
@@ -31,8 +31,8 @@
                     </div>
                     <div class="mb-3">
                         <label for="imgUrl" class="form-label">活動照片</label>
-                        <!-- <input type="file" class="form-control" id="activityImg" name="activityImg" accept="image/png, image/jpeg"> -->
-                        <input type="text" class="form-control" id="imgUrl" name="imgUrl" value="<%= activityData.imgUrl %>">
+                        <input type="file" class="form-control" id="img" name="img" accept="image/png, image/jpeg" required>
+                        <!-- <input type="text" class="form-control" id="imgUrl" name="imgUrl" value="<%= activityData.imgUrl %>"> -->
                     </div>
                     <div class="mb-3">
                         <label for="desc" class="form-label">活動描述</label>

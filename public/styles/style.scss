@@ -53,6 +53,10 @@ a {
 		right: 10px;
 	}
 
+	.card-img-top {
+		height: 45%;
+	}
+
 	&:hover {
 		transform: scale(1.01);
 		box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -246,8 +250,20 @@ footer {
 	width: 70%;
 	flex-direction: column;
 	justify-content: center;
+	margin: auto;
 
 	h5 {
 		margin-bottom: 1rem;
+	}
+
+	.signUpList {
+		display: flex;
+		flex-wrap: wrap;
+
+		span {
+			padding: .5rem;
+			border: 1px solid black;
+			border-radius: 5px;
+		}
 	}
 }

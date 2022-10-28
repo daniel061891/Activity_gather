@@ -22,13 +22,12 @@ const activitySchema = new Schema({
     type: String,
     required: true,
   },
-  numberOfPeople: {
-    type: Number,
+  signUpList: {
+    type: Array,
     // required: true,
   },
   imgUrl: {
-    type: String,
-    required: true,
+    type: String
   },
   desc: {
     type: String,

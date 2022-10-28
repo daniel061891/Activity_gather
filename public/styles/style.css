@@ -52,6 +52,10 @@ a {
   right: 10px;
 }
 
+.card .card-img-top {
+  height: 45%;
+}
+
 .card:hover {
   -webkit-transform: scale(1.01);
           transform: scale(1.01);
@@ -293,9 +297,24 @@ footer .footer_desc {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin: auto;
 }
 
 .detail_wrap h5 {
   margin-bottom: 1rem;
+}
+
+.detail_wrap .signUpList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.detail_wrap .signUpList span {
+  padding: .5rem;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 /*# sourceMappingURL=style.css.map */

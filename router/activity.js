@@ -18,4 +18,7 @@ router.get("/activity-classify", isAuth, activityController.getActivityClassify)
 
 router.get("/activity-detail/:id", activityController.getActivityDetail);
 
+router.get("/signup-activity/:id", isAuth, activityController.getSignUpActivity);
+router.get("/signout-activity/:id", isAuth, activityController.getSignOutActivity);
+
 module.exports = router;

@@ -12,7 +12,11 @@
               <div class="col-lg-3 col-4 my-3">
                 <div class="card" style="width:100%;height:430px;cursor:pointer;" onclick="location.href = '/activity-detail/<%= item._id%>'">
                   <!-- <button type="button" class="edit_btn btn btn-primary" onclick="location.href = '/edit-activity/<%= item._id%>'">編輯</button> -->
-                  <img src="\<%= item.imgUrl %>" class="card-img-top" alt="...">
+                  <% if(!item.imgUrl) {%>
+                    <img src="img/award.jpg" class="card-img-top" alt="...">
+                  <% } else {%> 
+                    <img src="\<%= item.imgUrl %>" class="card-img-top" alt="...">
+                  <% } %> 
                   <div class="card-body">
                     <h5 class="card-title"><%= item.name %></h5>
                     <p class="card-text limit_four"><%= item.desc %></p>

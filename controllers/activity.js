@@ -27,12 +27,26 @@ exports.postaddActivity = async(req, res, next) => {
     console.log(err);
   }
 };
-
+const ITEMS_OF_PAGE = 8
 exports.getmyActivity = async(req, res, next) => {
   const ownerId = req.session.user.id
+  let page = Number(req.query.page)
+  if (!page) {
+    page = 1
+  }
+  console.log(page);
   try {
-    const activityData = await activityModel.find({ ownerId: ownerId });
-    res.render("myActivity", { isLogin: req.session.user ? true : false, activityData });
+    const activityData = await activityModel.find({ownerId: ownerId}).skip((page - 1) * ITEMS_OF_PAGE).limit(ITEMS_OF_PAGE)
+    console.log(activityData);
+    const activityCount = await activityModel.count()
+    const pageInfo = {
+      totalPage: Math.ceil(activityCount / ITEMS_OF_PAGE),
+      hasPrePage: page === 1?false:true,
+      hasNextPage: page === Math.ceil(activityCount / ITEMS_OF_PAGE)?false:true,
+      page: page
+    }
+    console.log(pageInfo);
+    res.render("myActivity", { isLogin: req.session.user ? true : false, activityData, pageInfo});
   } catch (err) {
     console.log(err);
   }

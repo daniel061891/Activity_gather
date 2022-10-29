@@ -44,11 +44,24 @@ app.use(
     saveUninitialized: true,
   })
 );
-
+const ITEMS_OF_PAGE = 8
 app.get("/", async(req, res) => {
+  let page = Number(req.query.page)
+  if (!page) {
+    page = 1
+  }
+  console.log(page);
   try {
-    const activityData = await activityModel.find({})
-    res.render("index", { isLogin: req.session.user ? true : false, activityData});
+    const activityData = await activityModel.find({}).skip((page - 1) * ITEMS_OF_PAGE).limit(ITEMS_OF_PAGE)
+    const activityCount = await activityModel.count()
+    const pageInfo = {
+      totalPage: Math.ceil(activityCount / ITEMS_OF_PAGE),
+      hasPrePage: page === 1?false:true,
+      hasNextPage: page === Math.ceil(activityCount / ITEMS_OF_PAGE)?false:true,
+      page: page
+    }
+    console.log(pageInfo);
+    res.render("index", { isLogin: req.session.user ? true : false, activityData, pageInfo});
   } catch (err) {
     console.log(err);
   }

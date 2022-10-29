@@ -1,0 +1,19 @@
+<% if(activityData.length !==0) {%> 
+<nav class="d-flex justify-content-center" aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item <%= pageInfo.hasPrePage?'':'disabled'%>">
+        <a class="page-link" href="?page=<%= (pageInfo.page-1) %>" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+        </a>
+        </li>
+        <% for(i=1;i<=pageInfo.totalPage;i++) {%>
+            <li class="page-item <%= pageInfo.page == i?'active':''%>"><a class="page-link" href="?page=<%= i %>"><%= i %></a></li>
+        <% } %> 
+        <li class="page-item <%= pageInfo.hasNextPage?'':'disabled'%>">
+            <a class="page-link" href="?page=<%= (pageInfo.page+1) %>" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<% } %> 

@@ -8,7 +8,9 @@
                 <div class="img d-flex justify-content-start">
                     <img class="mb-3 w-50" src="/<%= activityData.imgUrl %> " alt="">
                 </div>
-                <h5>比賽照片下載: <a href="" download><%=  %></a></h5>
+                <% if( activityData.imgUrl ) { %>
+                    <h5>比賽照片下載: <a href="/download/<%= activityData._id %>">連結</a></h5>
+                <% } %>  
                 <h5>比賽場地: <%= activityData.place %></h5>
                 <h5>比賽地址: <%= activityData.address %></h5>
                 <h5>比賽日期: <%= activityData.date %></h5>

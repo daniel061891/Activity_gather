@@ -21,4 +21,6 @@ router.get("/activity-detail/:id", activityController.getActivityDetail);
 router.get("/signup-activity/:id", isAuth, activityController.getSignUpActivity);
 router.get("/signout-activity/:id", isAuth, activityController.getSignOutActivity);
 
+router.get("/download/:id", isAuth, activityController.getImgDownload);
+
 module.exports = router;

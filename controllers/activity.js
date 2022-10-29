@@ -1,5 +1,7 @@
 const activityModel = require("../models/activity");
 const UserModel = require("../models/auth");
+const fs = require('fs')
+const path = require('path')
 const fileHelper = require('../util/file')
 // Login
 exports.getaddActivity = (req, res, next) => {
@@ -151,4 +153,17 @@ exports.getSignOutActivity = async(req, res, next) => {
   } catch (err) {
     console.log(err);
   }
+}
+
+exports.getImgDownload = async (req, res, next) => {
+  const activityId = req.params.id
+  const activity = await activityModel.findOne({_id: activityId})
+  fs.readFile(activity.imgUrl, (err, data) => {
+    if (err) {
+      return next(err)
+    }
+    res.setHeader('Content-Type','application/jpeg')
+    res.setHeader('Content-Disposition', 'attachment; filename="image.jpg"')
+    res.send(data)
+  })
 }

@@ -35,8 +35,82 @@
                         </a>
                     <% } %>  
                 </div>
+                <h2 class="my-3">討論區</h2>
+                <div class="discussion_board_wrap">
+                    
+                    <div class="discussion_board my-2">
+                        <% if(activityData.discuss.length === 0) {%> 
+                        <p class="text-center no-discuss">目前無討論</p>
+                        <% } %> 
+                        <% activityData.discuss.forEach(item=>{ %>
+                            <div class="msg mb-3">
+                                <h5 class="name"><%= item.owner.name %>:</h5>
+                                <div class="bott" style="display: flex;
+                                justify-content: space-between;"><span><%= item.msg %></span><span class="time"><%= item.time %></span></div>
+                            </div>
+                        <% }) %>  
+                    </div>
+                    <% if(isLogin) {%> 
+                        <div class="form">
+                            <input
+                            type="text"
+                            class="form-control me-2"
+                            name="message"
+                            id="message_input"
+                            />
+                            <input type="hidden"  id="activity_id" value="<%= activityData._id %>">
+                            <button class="sendMsgBtn btn btn-secondary">送出</button>
+                        </div>
+                        <% } %> 
+                </div>
             </div>
         </div>
     </main>
     <%- include('includes/footer.ejs')  %> 
 </body>
+<script type="module">
+    import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+</script>
+<script>
+    const params = new URLSearchParams(window.location.search);
+    const activityId = params.get('id');
+    console.log(activityId);
+    async function sendMsg(msg) {
+        $('#message_input').val('')
+        const activity_id = $('#activity_id').val()
+        const data = {
+            activity_id: activity_id,
+            msg: msg,
+            time: new Date()
+        }
+        const Jdata = await fetch('/send-message', {body: JSON.stringify(data),headers: {'content-type': 'application/json'}, method: 'POST'})
+        const newMsg = await Jdata.json()
+        console.log(newMsg);
+        // $('.discussion_board').append(`<p>${newMsg.owner.name} : ${newMsg.msg}</p>`)
+    }
+    $('.sendMsgBtn').click(()=>{
+        const msg = $('#message_input').val()
+        if (msg === '') return
+        sendMsg(msg)
+    })
+    $('#message_input').keydown((e)=>{
+        const msg = $('#message_input').val()
+        if (e.keyCode == 13 && msg !== '') {
+            sendMsg(msg)
+        }
+    })
+    const socket = io();
+    // socket.on("connect", () => {
+    //     console.log(socket.id); 
+    // });
+    socket.on('msg', function (newMsg) {
+        if (activityId === newMsg.activity_id) {
+            $('.discussion_board').append(`<div class="msg mb-3">
+                <h5 class="name">${newMsg.owner.name}:</h5>
+                <div class="bott" style="display: flex;
+                justify-content: space-between;"><span>${newMsg.msg}</span><span class="time">${newMsg.time}</span></div>
+            </div>`)
+            $('.no-discuss').hide()
+        }
+    });
+</script>

@@ -36,6 +36,9 @@ const activitySchema = new Schema({
   ownerId: {
     type: String,
     require: true,
+  },
+  discuss:{
+    type: Array
   }
 });
 

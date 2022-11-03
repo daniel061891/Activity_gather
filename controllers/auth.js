@@ -25,6 +25,7 @@ exports.postLogin = async (req, res, next) => {
       req.session.user = {
         id: data[0]._id,
         email: data[0].email,
+        name: data[0].name
       };
       console.log("登入成功");
       res.redirect("/");

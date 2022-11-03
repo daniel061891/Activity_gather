@@ -267,3 +267,62 @@ footer {
 		}
 	}
 }
+
+.discussion_board_wrap {
+	display: flex;
+	flex-direction: column;
+
+	.form {
+		display: flex;
+
+		input {
+			width: 100%;
+		}
+
+		.btn {
+			width: 75px;
+		}
+	}
+
+	.discussion_board {
+		// border-radius: 15px;
+		min-height: 200px;
+		padding: 1.5rem;
+		border: 1px solid #192131;
+		color: #192131;
+		// background-color: #192131;
+		// overflow: auto;
+		// max-height: 350px;
+
+		.msg {
+			border-bottom: 1px solid gray;
+			padding-bottom: .7rem;
+
+			&:last-child {
+				border-bottom: 0;
+			}
+
+			.name {
+				margin-bottom: .5rem;
+			}
+		}
+
+		p {
+			// color: white;
+			position: relative;
+			margin: 0;
+
+
+			.bott {
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.time {
+				position: absolute;
+				bottom: 2px;
+				right: 0;
+			}
+		}
+	}
+}

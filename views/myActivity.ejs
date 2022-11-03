@@ -10,7 +10,7 @@
             <% } %> 
             <% activityData.forEach(item => { %>
               <div class="col-lg-3 col-4 my-3">
-                <div class="card" style="width:100%;height:430px;cursor:pointer;" onclick="location.href = '/activity-detail/<%= item._id%>'">
+                <div class="card" style="width:100%;height:430px;cursor:pointer;" onclick="location.href = '/activity-detail?id=<%= item._id%>'">
                   <% if(!item.imgUrl) {%>
                     <img src="img/award.jpg" class="card-img-top" alt="...">
                     <% } else {%> 

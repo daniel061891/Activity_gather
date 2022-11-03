@@ -9,6 +9,8 @@ const authRoutes = require("./router/auth");
 const activityRoutes = require("./router/activity")
 
 const activityModel = require("./models/activity");
+const { Socket } = require("socket.io");
+const sio = require('./socket');
 
 // 設定ejs
 app.set("view engine", "ejs");
@@ -71,7 +73,7 @@ app.use(authRoutes);
 app.use(activityRoutes);
 
 app.get("*", (req, res) => {
-  res.render("404", { isLogin: req.session.user ? true : false });
+  res.render("404", { isLogin: req.session.user ? true : false, errMsg: '找不到此頁面'});
   res.end();
 });
 
@@ -80,8 +82,17 @@ mongoose
     "mongodb+srv://daniel:1998mongo0618@cluster0.2hpkhk3.mongodb.net/?retryWrites=true&w=majority"
   )
   .then((result) => {
-    console.log("Connected!");
-    app.listen(3000);
+    // console.log("Connected!");
+    const server = app.listen(3000);
+    sio.init(server);
+    // const io = require('socket.io')(server)
+    // io.on('connection', socket => {
+    //   console.log('Client connected!');
+    //   console.log('socketid:', socket.id)
+    //   setInterval(function () {
+    //     socket.emit('second', { 'second': new Date().getSeconds() });
+    //   }, 1000);
+    // })
   })
   .catch((err) => {
     console.log(err);

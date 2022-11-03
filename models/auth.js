@@ -8,18 +8,25 @@ const userSchema = new Schema({
   },
   phone: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
-    required: true,
   },
   password: {
     type: String,
-    required: true,
   },
   signUpActivityList: {
     type: Array
+  },
+  googleID: {
+    type: String
+  },
+  date: {
+    type: Date,
+    default: Date.now()
+  },
+  thumbnail: {
+    type: String
   },
   resetToken: String,
   resetTokenExpiration: Date,

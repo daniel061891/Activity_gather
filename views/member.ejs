@@ -12,6 +12,7 @@
                                 <input type="text" class="form-control" name="name" id="name" placeholder="Daniel"
                                     value="<%= name %>" required>
                             </div>
+                            <% if(user.email) {%> 
                             <div class="mb-3">
                                 <label for="phone" class="form-label">手機</label>
                                 <input type="text" class="form-control" name="phone" id="phone" placeholder="0938558625"
@@ -30,6 +31,7 @@
                                 <label for="checkPassword" class="form-label">確認密碼</label>
                                 <input type="password" class="form-control" name="checkPassword" id="checkPassword">
                             </div>
+                            <% } %> 
                             <% if(showErr) { %>
                                 <div class="alert alert-danger" role="alert">
                                     <%= errMsg %>

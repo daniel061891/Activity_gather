@@ -1,9 +1,13 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-
+const dotenv = require('dotenv')
+const passport = require('passport')
 const session = require("express-session");
 const multer = require('multer')
+
+dotenv.config()
+
 
 const authRoutes = require("./router/auth");
 const activityRoutes = require("./router/activity")
@@ -12,6 +16,8 @@ const activityModel = require("./models/activity");
 const { Socket } = require("socket.io");
 const sio = require('./socket');
 
+// google登入
+require('./passport')
 // 設定ejs
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -45,7 +51,11 @@ app.use(
     resave: true,
     saveUninitialized: true,
   })
-);
+  );
+
+app.use(passport.initialize())
+app.use(passport.session())
+
 const ITEMS_OF_PAGE = 8
 app.get("/", async(req, res) => {
   let page = Number(req.query.page)
@@ -63,7 +73,7 @@ app.get("/", async(req, res) => {
       page: page
     }
     console.log(pageInfo);
-    res.render("index", { isLogin: req.session.user ? true : false, activityData, pageInfo});
+    res.render("index", { user: req.session.user, activityData, pageInfo});
   } catch (err) {
     console.log(err);
   }
@@ -71,28 +81,20 @@ app.get("/", async(req, res) => {
 
 app.use(authRoutes);
 app.use(activityRoutes);
+app.get('/privacy-policy', (req, res)=> {
+  res.render('privacy', { user: req.session.user})
+});
 
 app.get("*", (req, res) => {
-  res.render("404", { isLogin: req.session.user ? true : false, errMsg: '找不到此頁面'});
+  res.render("404", { user: req.session.user, errMsg: '找不到此頁面'});
   res.end();
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://daniel:1998mongo0618@cluster0.2hpkhk3.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_PASSWORD)
   .then((result) => {
-    // console.log("Connected!");
     const server = app.listen(3000);
     sio.init(server);
-    // const io = require('socket.io')(server)
-    // io.on('connection', socket => {
-    //   console.log('Client connected!');
-    //   console.log('socketid:', socket.id)
-    //   setInterval(function () {
-    //     socket.emit('second', { 'second': new Date().getSeconds() });
-    //   }, 1000);
-    // })
   })
   .catch((err) => {
     console.log(err);

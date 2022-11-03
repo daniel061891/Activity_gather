@@ -2,6 +2,7 @@ const UserModel = require("../models/auth");
 const bcrypt = require('bcryptjs')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto')
+const passport = require('passport')
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
@@ -13,7 +14,7 @@ const transporter = nodemailer.createTransport({
 });
 // Login
 exports.getLogin = (req, res, next) => {
-  res.render("login", { showErr: false, isLogin: false });
+  res.render("login", { showErr: false, user: req.session.user });
 };
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
@@ -34,7 +35,7 @@ exports.postLogin = async (req, res, next) => {
     res.render("login", {
       errMsg: "信箱或密碼錯誤",
       showErr: true,
-      isLogin: false,
+      user: req.session.user,
     });
   } catch (err) {
     console.log(err);
@@ -43,7 +44,7 @@ exports.postLogin = async (req, res, next) => {
 
 //register
 exports.getRegister = (req, res, next) => {
-  res.render("register", { showErr: false, isLogin: false });
+  res.render("register", { showErr: false, user: req.session.user });
 };
 
 exports.postRegister = async (req, res, next) => {
@@ -52,7 +53,7 @@ exports.postRegister = async (req, res, next) => {
     res.render("register", {
       errMsg: "密碼與確認密碼必須一致",
       showErr: true,
-      isLogin: false,
+      user: req.session.user,
     });
     return;
   }
@@ -62,7 +63,7 @@ exports.postRegister = async (req, res, next) => {
     res.render("register", {
       showErr: true,
       errMsg: "此信箱或手機已被註冊",
-      isLogin: false,
+      user: req.session.user,
     });
     return;
   }
@@ -99,7 +100,7 @@ exports.getLogout = (req, res, next) => {
 // member center
 exports.getMemberCenter = async (req, res, next) => {
   if (req.session.user === undefined) {
-    res.render("404", { isLogin: req.session.user ? true : false });
+    res.render("404", { user: req.session.user });
     return;
   }
   const id = req.session.user.id;
@@ -112,7 +113,7 @@ exports.getMemberCenter = async (req, res, next) => {
       name,
       phone,
       email,
-      isLogin: true,
+      user: req.session.user,
     });
   } catch (err) {
     console.log(err);
@@ -122,7 +123,7 @@ exports.getMemberCenter = async (req, res, next) => {
 // postMemberCenter
 exports.postMemberCenter = async (req, res, next) => {
   if (req.session.user === undefined) {
-    res.render("404", { isLogin: req.session.user ? true : false });
+    res.render("404", { user: req.session.user });
     return;
   }
   // const userEmail = req.session.user.email;
@@ -135,7 +136,7 @@ exports.postMemberCenter = async (req, res, next) => {
       name,
       phone,
       email,
-      isLogin: true,
+      user: req.session.user,
     });
     return;
   }
@@ -169,7 +170,7 @@ exports.postMemberCenter = async (req, res, next) => {
       name,
       phone,
       email,
-      isLogin: true,
+      user: req.session.user,
     });
   } catch (err) {
     console.log(err);
@@ -177,7 +178,7 @@ exports.postMemberCenter = async (req, res, next) => {
 };
 
 exports.getForgetPassword = async(req, res) => {
-  res.render("forgetPassword", { isLogin: req.session.user ? true : false, showErr: false});
+  res.render("forgetPassword", { user: req.session.user, showErr: false});
 }
 
 exports.postForgetPassword = async(req, res) => {
@@ -191,7 +192,7 @@ exports.postForgetPassword = async(req, res) => {
     try {
       const user = await UserModel.findOne({email: email})
       if (!user) {
-        res.render("forgetPassword", { isLogin: req.session.user ? true : false, showErr: true, errMsg: '查無此信箱'});
+        res.render("forgetPassword", { user: req.session.user, showErr: true, errMsg: '查無此信箱'});
         return
       }
       user.resetToken = token
@@ -211,7 +212,7 @@ exports.postForgetPassword = async(req, res) => {
       console.log(err);
     }
   })
-  // res.render("forgetPassword", { isLogin: req.session.user ? true : false, showErr: false});
+  // res.render("forgetPassword", { user: req.session.user, showErr: false});
 }
 
 exports.getReset = async(req, res) => {
@@ -220,7 +221,7 @@ exports.getReset = async(req, res) => {
     const user = await UserModel.findOne({resetToken: token, resetTokenExpiration: {$gt: Date.now()}})
     if (user) {
       const userId = user._id.toString()
-      res.render("reset", { isLogin: req.session.user ? true : false, showErr: false, userId, resetToken: user.resetToken });
+      res.render("reset", { user: req.session.user, showErr: false, userId, resetToken: user.resetToken });
     }
   } catch (err) {
     console.log(err);
@@ -231,7 +232,7 @@ exports.postReset = async(req, res) => {
   try {
     const { password, checkPassword, userId, resetToken } = req.body
     if (password !== checkPassword) {
-      res.render("reset", { isLogin: req.session.user ? true : false, showErr: true, errMsg: '密碼與密碼確認必須一致'});
+      res.render("reset", { user: req.session.user, showErr: true, errMsg: '密碼與密碼確認必須一致'});
       return
     }
     console.log(userId, resetToken);
@@ -247,4 +248,7 @@ exports.postReset = async(req, res) => {
   }
 }
 
-
+// exports.googleLogin = (req, res) => {
+//   console.log('google login');
+//   passport.authenticate('google', { scope: ['profile'] })
+// }

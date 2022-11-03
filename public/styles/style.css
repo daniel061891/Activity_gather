@@ -351,11 +351,16 @@ footer .footer_desc {
 
 .discussion_board_wrap .discussion_board .msg {
   border-bottom: 1px solid gray;
-  padding-bottom: .7rem;
 }
 
 .discussion_board_wrap .discussion_board .msg:last-child {
   border-bottom: 0;
+  margin-bottom: 0 !important;
+  padding-bottom: 0;
+}
+
+.discussion_board_wrap .discussion_board .msg:nth-child(even) {
+  background-color: #f7f7f7;
 }
 
 .discussion_board_wrap .discussion_board .msg .name {
@@ -380,5 +385,32 @@ footer .footer_desc {
   position: absolute;
   bottom: 2px;
   right: 0;
+}
+
+.google_login_wrap {
+  border-top: 1px solid black;
+}
+
+.google_login_wrap .google_login {
+  width: 50%;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: auto;
+  background-color: #4285F4;
+  color: white;
+  border-radius: 5px;
+}
+
+.google_login_wrap .google_login img {
+  width: 20px;
+  height: 20px;
 }
 /*# sourceMappingURL=style.css.map */

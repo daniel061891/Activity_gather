@@ -1,14 +1,14 @@
 const activityModel = require("../models/activity");
 const UserModel = require("../models/auth");
 const fs = require('fs')
-const path = require('path')
 const fileHelper = require('../util/file')
 const io = require('../socket')
+
 // Login
 exports.getaddActivity = (req, res, next) => {
   res.render("addActivity", {
     showErr: false,
-    isLogin: req.session.user ? true : false,
+    user: req.session.user,
   });
 };
 exports.postaddActivity = async(req, res, next) => {
@@ -28,7 +28,7 @@ exports.postaddActivity = async(req, res, next) => {
     res.redirect("/my-activity");
   } catch (err) {
     console.log(err);
-    res.render('404', {isLogin: req.session.user ? true : false, errMsg: '網路發生問題'})
+    res.render('404', {user: req.session.user, errMsg: '網路發生問題'})
   }
 };
 const ITEMS_OF_PAGE = 8
@@ -42,7 +42,7 @@ exports.getmyActivity = async(req, res, next) => {
   try {
     const activityData = await activityModel.find({ownerId: ownerId}).skip((page - 1) * ITEMS_OF_PAGE).limit(ITEMS_OF_PAGE)
     if (!activityData) {
-      res.render('404', {isLogin: req.session.user ? true : false})
+      res.render('404', {user: req.session.user})
       const err = new Error('找不到此活動')
       throw err
     }
@@ -53,14 +53,14 @@ exports.getmyActivity = async(req, res, next) => {
       hasNextPage: page === Math.ceil(activityCount / ITEMS_OF_PAGE)?false:true,
       page: page
     }
-    res.render("myActivity", { isLogin: req.session.user ? true : false, activityData, pageInfo});
+    res.render("myActivity", { user: req.session.user, activityData, pageInfo});
   } catch (err) {
     console.log(err);
   }
 };
 
 exports.getActivityClassify = (req, res, next) => {
-  res.render("activityClassify", { isLogin: req.session.user ? true : false, });
+  res.render("activityClassify", { user: req.session.user, });
 };
 
 exports.getActivityDetail = async(req, res, next) => {
@@ -75,24 +75,24 @@ exports.getActivityDetail = async(req, res, next) => {
     } 
     if (userId === '') {
       showSignUpBtn = true
-      res.render("activityDetail", { isLogin: req.session.user ? true : false, activityData, showSignUpBtn});
+      res.render("activityDetail", { user: req.session.user, activityData, showSignUpBtn});
       return
     }
     const isUserSignUp = activityData.signUpList.some(user => {
       return user.userId === userId
     })
     showSignUpBtn = !isUserSignUp
-    res.render("activityDetail", { isLogin: req.session.user ? true : false, activityData, showSignUpBtn});
+    res.render("activityDetail", { user: req.session.user, activityData, showSignUpBtn});
   } catch (err) {
     console.log(err);
-    res.render('404', {isLogin: req.session.user ? true : false, errMsg: '找不到此頁面'})
+    res.render('404', {user: req.session.user, errMsg: '找不到此頁面'})
   }
 };
 
 exports.getEditActivity = async(req, res, next) => {
   const activityId = req.params.id
   const activityData = await activityModel.findOne({ _id: activityId})
-  res.render("editActivity", { showErr: false, isLogin: req.session.user ? true : false, activityData});
+  res.render("editActivity", { showErr: false, user: req.session.user, activityData});
 };
 
 exports.postEditActivity = async(req, res, next) => {
@@ -194,11 +194,12 @@ exports.postMsg = async(req, res) => {
   const { activity_id, msg, time} = req.body
   try {
     const activity = await activityModel.findOne({_id: activity_id})
+    const newTime = `${new Date(time).getFullYear()}/${new Date(time).getMonth()}/${new Date(time).getDate()}  ${new Date(time).getHours()}:${new Date(time).getMinutes()}`
     console.log(activity);
     activity.discuss.push({
       msg: msg,
       activity_id: activity_id,
-      time: time,
+      time: newTime,
       owner: {
         name: userName,
         id: userId,
@@ -208,22 +209,16 @@ exports.postMsg = async(req, res) => {
     res.json({
       msg: msg,
       activity_id: activity_id,
-      time: time,
+      time: newTime,
       owner: {
         name: userName,
         id: userId,
       }
     })
-    // io.getIO().on('create-room', () => {
-    //   const roomId = uuid(`${Date.now()}`, uuid.DNS);
-    //   socket.join(roomId);
-    //   socket.emit('join-room-message', `You've join ${roomId} room`);
-    //   io.to(roomId).emit('room-brocast', `${socket.id} has join this room`);
-    // })
     io.getIO().emit('msg', {
       msg: msg,
       activity_id: activity_id,
-      time: time,
+      time: newTime,
       owner: {
         name: userName,
         id: userId,
@@ -234,3 +229,4 @@ exports.postMsg = async(req, res) => {
     console.log(err);
   }
 }
+

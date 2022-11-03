@@ -1,7 +1,9 @@
 <header>
     <div class="top_bar">
         <div class="container">
-            <!-- <h5 class="user_info">Hi! </h5> -->
+            <% if (user) { %>  
+            <h5 class="user_info"><span class="me-2">Hi</span><%= user.name %></h5>
+            <% } %> 
             <a href="/">
                 <h1 class="logo">
                     Activity<i class="fa-solid fa-trophy mx-3"></i>Gather
@@ -9,11 +11,11 @@
             </a>
             <div class="auth_btns">
                 <!-- <a href="/register" class="register_btn all_btns"></a> -->
-                <% if (!isLogin) { %>  
+                <% if (!user) { %>  
                 <a href="/login" class="login_btn btn btn-danger ms-3">登入/註冊</a>
                 <% } %> 
                 <!-- <button type="button" class="btn btn-primary">Primary</button> -->
-                <% if (isLogin) { %>  
+                <% if (user) { %>  
                 <a href="/membercenter" class="btn btn-primary ms-3"><i class="fa-solid fa-user me-2"></i>會員中心</a>
                 <a href="/logout" class="login_btn btn btn-success ms-3"><i class="fa-solid fa-right-from-bracket me-2"></i>登出</a>
                 <% } %> 
@@ -24,11 +26,11 @@
         <div class="container">
             <div class="nav_bar">
                 <a href="/" class="">所有活動</a>
-                <% if (isLogin) { %>  
+                <% if (user) { %>  
                     <a href="/add-activity" class="">建立活動</a>
                     <a href="/my-activity" class="">我的活動</a>
                 <% } %> 
-                <a href="/activity-classify" class="">活動分類</a>
+                <!-- <a href="/activity-classify" class="">活動分類</a> -->
             </div>
             <div class="search_bar">
                 <i class="fa-solid fa-magnifying-glass me-2"></i>
@@ -48,9 +50,4 @@
 </header>
 
 <script>
-    // const isLogin = document.cookie.split('=')[1]
-    // if (isLogin) {
-    //     const auth_btns = document.querySelector('.auth_btns')
-    //     auth_btns.setAttribute('style', 'visibility: hidden;')
-    // }
 </script>

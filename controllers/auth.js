@@ -22,7 +22,7 @@ exports.postLogin = async (req, res, next) => {
     const data = await UserModel.find({ email: email });
     const comparePassword = await bcrypt.compare(password, data[0].password)
     console.log(comparePassword);
-    if (data.length !== 0 && comparePassword ) {
+    if (data.length !== 0 && comparePassword) {
       req.session.user = {
         id: data[0]._id,
         email: data[0].email,

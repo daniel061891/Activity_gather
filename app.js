@@ -8,7 +8,6 @@ const multer = require('multer')
 
 dotenv.config()
 
-
 const authRoutes = require("./router/auth");
 const activityRoutes = require("./router/activity")
 

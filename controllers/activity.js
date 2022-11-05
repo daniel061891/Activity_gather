@@ -21,7 +21,7 @@ exports.postaddActivity = async(req, res, next) => {
   const ownerId = req.session.user.id
   try {
     await activityModel.create({
-      name, type, place, imgUrl, desc, address, date, ownerId
+      name, type, place, imgUrl, desc, address, date, ownerId, createAt: Date.now()
     });
     // const activitys = await activityModel.find({})
     // io.getIO().emit('activitys', activitys);
@@ -40,7 +40,7 @@ exports.getmyActivity = async(req, res, next) => {
   }
   console.log(page);
   try {
-    const activityData = await activityModel.find({ownerId: ownerId}).skip((page - 1) * ITEMS_OF_PAGE).limit(ITEMS_OF_PAGE)
+    const activityData = await activityModel.find({ownerId: ownerId}).skip((page - 1) * ITEMS_OF_PAGE).limit(ITEMS_OF_PAGE).sort({createAt:-1}); 
     if (!activityData) {
       res.render('404', {user: req.session.user})
       const err = new Error('找不到此活動')
@@ -194,12 +194,16 @@ exports.postMsg = async(req, res) => {
   const { activity_id, msg, time} = req.body
   try {
     const activity = await activityModel.findOne({_id: activity_id})
-    const newTime = `${new Date(time).getFullYear()}/${new Date(time).getMonth()}/${new Date(time).getDate()}  ${new Date(time).getHours()}:${new Date(time).getMinutes()}`
-    console.log(activity);
+    // console.log('前端傳來沒動過', time);
+    // const sDate = new Date(time)
+    // const hour = sDate.getHours().toString().length === 1 ? `0${sDate.getHours()}` : sDate.getHours()
+    // const minute = sDate.getMinutes().toString().length === 1 ? `0${sDate.getMinutes()}` : sDate.getMinutes()
+    // const newTime = `${sDate.getFullYear()}/${sDate.getMonth() + 1}/${sDate.getDate()}  ${hour}:${minute}`
+    // console.log('newTime', newTime);
     activity.discuss.push({
       msg: msg,
       activity_id: activity_id,
-      time: newTime,
+      time: time,
       owner: {
         name: userName,
         id: userId,
@@ -209,7 +213,7 @@ exports.postMsg = async(req, res) => {
     res.json({
       msg: msg,
       activity_id: activity_id,
-      time: newTime,
+      time: time,
       owner: {
         name: userName,
         id: userId,
@@ -218,7 +222,7 @@ exports.postMsg = async(req, res) => {
     io.getIO().emit('msg', {
       msg: msg,
       activity_id: activity_id,
-      time: newTime,
+      time: time,
       owner: {
         name: userName,
         id: userId,

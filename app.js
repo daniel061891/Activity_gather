@@ -63,7 +63,7 @@ app.get("/", async(req, res) => {
   }
   console.log(page);
   try {
-    const activityData = await activityModel.find({}).skip((page - 1) * ITEMS_OF_PAGE).limit(ITEMS_OF_PAGE)
+    const activityData = await activityModel.find({}).skip((page - 1) * ITEMS_OF_PAGE).limit(ITEMS_OF_PAGE).sort({createAt:-1})
     const activityCount = await activityModel.count()
     const pageInfo = {
       totalPage: Math.ceil(activityCount / ITEMS_OF_PAGE),

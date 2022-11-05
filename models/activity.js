@@ -39,6 +39,9 @@ const activitySchema = new Schema({
   },
   discuss:{
     type: Array
+  },  
+  createAt: {
+    type: Date
   }
 });
 

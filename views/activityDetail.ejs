@@ -60,7 +60,7 @@
                             <div class="msg py-3 px-2">
                                 <h5 class="name"><%= item.owner.name %> :</h5>
                                 <div class="bott" style="display: flex;
-                                justify-content: space-between;"><span><%= item.msg %></span><span class="time"><%= item.time %></span></div>
+                                justify-content: space-between;"><span style="width: 80%; word-wrap:break-word;"><%= item.msg %></span><span class="time"><%= item.time %></span></div>
                             </div>
                         <% }) %>  
                     </div>
@@ -80,16 +80,20 @@
     async function sendMsg(msg) {
         $('#message_input').val('')
         const activity_id = $('#activity_id').val()
+        const sDate = new Date(Date.now())
+        console.log('sDate', sDate);
+        const hour = sDate.getHours().toString().length === 1 ? `0${sDate.getHours()}` : sDate.getHours()
+        const minute = sDate.getMinutes().toString().length === 1 ? `0${sDate.getMinutes()}` : sDate.getMinutes()
+        const newTime = `${sDate.getFullYear()}/${sDate.getMonth() + 1}/${sDate.getDate()}  ${hour}:${minute}`
+        console.log('newTime', newTime);
         const data = {
             activity_id: activity_id,
             msg: msg,
-            time: new Date()
+            time: newTime
         }
+        console.log(data.time);
         const Jdata = await fetch('/send-message', {body: JSON.stringify(data),headers: {'content-type': 'application/json'}, method: 'POST'})
         const newMsg = await Jdata.json()
-        console.log('JSON', Jdata);
-        console.log('正常', newMsg);
-        // $('.discussion_board').append(`<p>${newMsg.owner.name} : ${newMsg.msg}</p>`)
     }
     $('.sendMsgBtn').click(()=>{
         const msg = $('#message_input').val()

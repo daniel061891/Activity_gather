@@ -19,24 +19,31 @@ exports.getLogin = (req, res, next) => {
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
-    const data = await UserModel.find({ email: email });
-    const comparePassword = await bcrypt.compare(password, data[0].password)
-    console.log(comparePassword);
-    if (data.length !== 0 && comparePassword) {
-      req.session.user = {
-        id: data[0]._id,
-        email: data[0].email,
-        name: data[0].name
-      };
-      console.log("登入成功");
-      res.redirect("/");
-      return;
+    const data = await UserModel.findOne({ email: email });
+    if (!data) {
+      res.render("login", {
+        errMsg: "信箱或密碼錯誤",
+        showErr: true,
+        user: req.session.user,
+      });
+      return
     }
-    res.render("login", {
-      errMsg: "信箱或密碼錯誤",
-      showErr: true,
-      user: req.session.user,
-    });
+    const comparePassword = await bcrypt.compare(password, data.password)   
+    if (!comparePassword) {
+      res.render("login", {
+        errMsg: "信箱或密碼錯誤",
+        showErr: true,
+        user: req.session.user,
+      });
+      return
+    }
+    req.session.user = {
+      id: data._id,
+      email: data.email,
+      name: data.name
+    };
+    console.log("登入成功");
+    res.redirect("/");
   } catch (err) {
     console.log(err);
   }
@@ -203,7 +210,7 @@ exports.postForgetPassword = async(req, res) => {
         to: email,
         subject: '重設密碼',
         html: `
-          <a href="http://localhost:3000/reset/${token}">點擊此連結重設密碼</a>
+          <a href="https://activity-gather.herokuapp.com/reset/${token}">點擊此連結重設密碼</a>
         `,
       })
       console.log('sendEmailInfo', sendEmailInfo);

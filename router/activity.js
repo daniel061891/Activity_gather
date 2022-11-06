@@ -25,6 +25,9 @@ router.get("/download/:id", isAuth, activityController.getImgDownload);
 
 router.post("/send-message", isAuth, activityController.postMsg);
 
+router.get("/search", activityController.getSearch);
+// router.post("/search", activityController.postSearch);
+
 
 
 module.exports = router;

@@ -234,3 +234,9 @@ exports.postMsg = async(req, res) => {
   }
 }
 
+exports.getSearch = async(req, res) => {
+  const keyword =  req.query.keyword
+  const activityData = await activityModel.find({name: { $regex: keyword, $options: "i" }}).sort({createAt: -1})
+  res.render('search', {user: req.session.user, activityData, keyword: keyword})
+}
+

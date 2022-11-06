@@ -1,0 +1,44 @@
+<%- include('includes/head.ejs') %>
+  <body>
+    <%- include('includes/header.ejs') %>
+      <main>
+        <div class="container">
+          <h1 class="mb-3">關鍵字: <%= keyword %></h1>
+          <div class="row">
+            <% if(activityData.length === 0){ %> 
+              <h1 class="text-center">查無活動</h1>
+            <% } %> 
+            <% activityData.forEach(item => { %>
+              <div class="col-lg-3 col-4 my-3">
+                <div class="card" style="width:100%;height:430px;cursor:pointer;" onclick="location.href = '/activity-detail?id=<%= item._id%>'">
+                  <% if(!item.imgUrl) {%>
+                    <img src="img/award.jpg" class="card-img-top" alt="...">
+                    <% } else {%> 
+                      <img src="\<%= item.imgUrl %>" class="card-img-top" alt="...">
+                      <% } %> 
+                      <div class="card-body">
+                        <h5 class="card-title limit_two"><%= item.name %></h5>
+                        <p class="card-text limit_four"><%= item.desc %></p>
+                        <!-- <a href="/login" class="btn btn-primary">Go somewhere</a> -->
+                      </div>
+                      <!-- <div class="btns">
+                        <button type="button" class="edit_btn btn btn-primary me-2" onclick="location.href = '/edit-activity/<%= item._id%>'">編輯</button>
+                        <a href="/delete-activity/<%= item._id %>" class="btn btn-danger all_btns">刪除</a>
+                      </div> -->
+                </div>
+              </div>
+              <% }) %>
+          </div>
+        </div>
+      </main>
+      <%- include('includes/footer.ejs') %>
+  </body>
+</html>
+<script>
+  const edit_btns = document.querySelectorAll('.edit_btn')
+  edit_btns.forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.stopPropagation()
+    })
+  })
+</script>

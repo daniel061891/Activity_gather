@@ -161,12 +161,12 @@ header .mid_bar .container .search_bar {
 header .mid_bar .container .search_bar i {
   font-size: 1.5rem;
 }
-header .mid_bar .container .search_bar form {
+header .mid_bar .container .search_bar .search_wrap {
   display: flex;
   align-items: center;
   width: 100%;
 }
-header .mid_bar .container .search_bar form button {
+header .mid_bar .container .search_bar .search_wrap button {
   width: 100px;
 }
 

@@ -34,7 +34,7 @@
             </div>
             <div class="search_bar">
                 <i class="fa-solid fa-magnifying-glass me-2"></i>
-                <form action="/search" method="POST">
+                <div class="search_wrap">
                     <input
                     type="text"
                     class="form-control me-2"
@@ -42,12 +42,26 @@
                     id="search_input"
                     aria-describedby="emailHelp"
                     />
-                    <button type="submit" class="btn btn-secondary">搜尋</button>
-                </form>
+                    <button class="btn btn-secondary search_btn">搜尋</button>
+                </div>
             </div>
         </div>
     </div>
 </header>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
+    async function searchKeyword(keyword) {
+        location.href = `/search?keyword=${keyword}`
+    }
+    $('.search_btn').click(()=>{
+        const keyword = $('#search_input').val()
+        if (keyword === '') return
+        searchKeyword(keyword)
+    })
+    $('#search_input').keydown((e)=>{
+        const keyword = $('#search_input').val()
+        if (e.keyCode == 13 && keyword !== '') {
+            searchKeyword(keyword)
+        }
+    })
 </script>
